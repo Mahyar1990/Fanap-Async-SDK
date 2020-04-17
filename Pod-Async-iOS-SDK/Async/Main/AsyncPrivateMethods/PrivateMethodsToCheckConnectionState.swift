@@ -35,7 +35,7 @@ extension Async {
                                           errorMessage: "Can not open Socket!",
                                           errorEvent:   nil)
             } else {
-                self.delegate?.asyncStateChanged(socketState:           self.socketState.rawValue,
+                self.delegate?.asyncStateChanged(socketState:           self.socketState,
                                                  timeUntilReconnect:    0,
                                                  deviceRegister:        self.isDeviceRegister,
                                                  serverRegister:        self.isServerRegister,

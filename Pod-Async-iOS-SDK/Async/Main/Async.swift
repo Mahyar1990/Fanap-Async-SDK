@@ -85,25 +85,26 @@ public class Async {
     var isDeviceRegister    = false
     var isServerRegister    = false
     
-    var socketState         = socketStateType.CONNECTING
-//    private var asyncState          = ""
+    var socketState         = SocketStateType.CONNECTING
     
-    //    private var registerServerTimeoutId: Int        = 0
-    //    private var registerDeviceTimeoutId: Int        = 0
     var checkIfSocketHasOpennedTimeoutId:   Int = 0
     var socketReconnectRetryInterval:       Int = 0
     var socketReconnectCheck:               Int = 0
     
     var lastMessageId           = 0
     var retryStep:      Double  = 1
-    //    var asyncReadyTimeoutId
+    
     var pushSendDataArr         = [[String: Any]]()
     
-    //    var waitForSocketToConnectTimeoutId: Int
     var wsConnectionWaitTime:           Int = 5
     var connectionCheckTimeout:         Int = 10
     
     
+    var socket: WebSocket?
+    
+    
+    
+    // MARK: Last Received Message Timer
     // used to close socket if needed (func handleIfNeedsToCloseTheSocket)
     var lastReceivedMessageTime:    Date?
     var lastReceivedMessageTimer:   RepeatingTimer? {
@@ -132,6 +133,7 @@ public class Async {
     }
     
     
+    // MARK: Last Sent Message Timer
     // used to live the socket connection (func sendData)
     var lastSentMessageTime:    Date?
     var lastSentMessageTimer:   RepeatingTimer? {
@@ -164,8 +166,7 @@ public class Async {
     }
     
     
-//    var socketRealTimeStatusInterval:   RepeatingTimer?
-    
+    // MARK: Retry To Connect To Socket Timer
     var retryToConnectToSocketTimer: RepeatingTimer? {
         didSet {
             if (retryToConnectToSocketTimer != nil) {
@@ -189,6 +190,7 @@ public class Async {
     }
     
     
+    // MARK: Check Socket is Opened or not Timer
     // use to check if we can initial socket connection or not, at the start creation of Async (func startTimers)
     var checkIfSocketHasOpennedTimer:  RepeatingTimer? {
         didSet {
@@ -205,9 +207,8 @@ public class Async {
         }
     }
     
-//    var socketReconnectRetryIntervalTimer:      RepeatingTimer?
-//    var socketReconnectCheckTimer:              RepeatingTimer?
     
+    // MARK: Register Server Timer
     var registerServerTimer: RepeatingTimer? {
         didSet {
             if (registerServerTimer != nil) {
@@ -222,8 +223,6 @@ public class Async {
             }
         }
     }
-    
-    var socket: WebSocket?
     
 }
 

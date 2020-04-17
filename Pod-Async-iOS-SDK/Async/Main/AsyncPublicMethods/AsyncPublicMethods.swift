@@ -33,7 +33,7 @@ extension Async {
      this method will return Async State (the value inside 'asyncState' property)
      */
     public func asyncGetAsyncState() -> JSON {
-        let state: JSON = ["socketState": socketState.rawValue, "idDeviceRegistered": isDeviceRegister, "isServerRegistered": isServerRegister, "peerId": peerId]
+        let state: JSON = ["socketState": socketState.intValue(), "idDeviceRegistered": isDeviceRegister, "isServerRegistered": isServerRegister, "peerId": peerId]
         return state
     }
     
@@ -110,8 +110,8 @@ extension Async {
     public func asyncClose() {
         isDeviceRegister = false
         isServerRegister = false
-        socketState = socketStateType.CLOSED
-        delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+        socketState = SocketStateType.CLOSED
+        delegate?.asyncStateChanged(socketState:        socketState,
                                     timeUntilReconnect: 0,
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
@@ -131,8 +131,8 @@ extension Async {
         isSocketOpen = false
         pushSendDataArr = []
         registerServerTimer?.suspend()
-        socketState = socketStateType.CLOSED
-        delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+        socketState = SocketStateType.CLOSED
+        delegate?.asyncStateChanged(socketState:        socketState,
                                     timeUntilReconnect: 0,
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
@@ -149,7 +149,7 @@ extension Async {
      this functin will decide to send it right away or put in on a Queue to send it later (based on the state of the socket connection)
      */
     public func pushSendData(type: Int, content: String) {
-        if (socketState == socketStateType.OPEN) {
+        if (socketState == SocketStateType.CONNECTED) {
             sendData(type: type, content: content)
         } else {
             sendDataToQueue(type: type, content: content)

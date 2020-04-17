@@ -18,7 +18,7 @@ public protocol AsyncDelegates: class {
     func asyncReconnect(newPeerID: Int)
     func asyncReceiveMessage(params: JSON)
     func asyncReady()
-    func asyncStateChanged(socketState:Int, timeUntilReconnect:Int, deviceRegister:Bool, serverRegister:Bool, peerId:Int)
+    func asyncStateChanged(socketState: SocketStateType, timeUntilReconnect: Int, deviceRegister: Bool, serverRegister: Bool, peerId: Int)
     func asyncError(errorCode: Int, errorMessage: String, errorEvent: Any?)
 }
 

@@ -28,8 +28,8 @@ extension Async {
         isSocketOpen = true
         delegate?.asyncConnect(newPeerID: peerId)
         retryStep = 1
-        socketState = socketStateType.OPEN
-        delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+        socketState = SocketStateType.CONNECTED
+        delegate?.asyncStateChanged(socketState:        socketState,
                                     timeUntilReconnect: 0,
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
@@ -51,9 +51,9 @@ extension Async {
         isDeviceRegister = false
         oldPeerId = peerId
         
-        socketState = socketStateType.CLOSED
+        socketState = SocketStateType.CLOSED
         
-        delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+        delegate?.asyncStateChanged(socketState:        socketState,
                                     timeUntilReconnect: 0,
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
@@ -62,8 +62,8 @@ extension Async {
         
         // here, we try to connect to the socket on specific period of time
         if (reconnectOnClose) {
-            socketState = socketStateType.CLOSED
-            delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+            socketState = SocketStateType.CLOSED
+            delegate?.asyncStateChanged(socketState:        socketState,
                                         timeUntilReconnect: Int(retryStep),
                                         deviceRegister:     isDeviceRegister,
                                         serverRegister:     isServerRegister,
@@ -76,7 +76,7 @@ extension Async {
             delegate?.asyncError(errorCode:     4005,
                                  errorMessage:  "Socket Closed!",
                                  errorEvent:    nil)
-            delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+            delegate?.asyncStateChanged(socketState:        socketState,
                                         timeUntilReconnect: 0,
                                         deviceRegister:     isDeviceRegister,
                                         serverRegister:     isServerRegister,
@@ -99,7 +99,7 @@ extension Async {
      6: ERROR_MESSAGE
      */
     func handleOnRecieveMessage(messageRecieved: String) {
-        log.verbose("This Message Recieves from socket: \n\(messageRecieved)", context: "Async - RecieveFromSocket")
+        log.debug("This Message Recieves from socket: \n\(messageRecieved)", context: "Async - RecieveFromSocket")
         
         lastReceivedMessageTime = Date()
         
@@ -185,9 +185,9 @@ extension Async {
         }
         
         peerId = message["content"].intValue
-        socketState = socketStateType.OPEN
+        socketState = SocketStateType.CONNECTED
         
-        delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+        delegate?.asyncStateChanged(socketState:        socketState,
                                     timeUntilReconnect: 0,
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
@@ -214,8 +214,8 @@ extension Async {
             if (senderName == serverName) {
                 isServerRegister = true
                 // reset and stop registerServerTimeoutId
-                socketState = socketStateType.OPEN
-                delegate?.asyncStateChanged(socketState:        socketState.rawValue,
+                socketState = SocketStateType.CONNECTED
+                delegate?.asyncStateChanged(socketState:        socketState,
                                             timeUntilReconnect: 0,
                                             deviceRegister:     isDeviceRegister,
                                             serverRegister:     isServerRegister,
