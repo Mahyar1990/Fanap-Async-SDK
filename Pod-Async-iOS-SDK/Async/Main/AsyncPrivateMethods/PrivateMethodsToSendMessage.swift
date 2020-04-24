@@ -46,6 +46,7 @@ extension Async {
         let contentStr = "\(content)"
         pushSendData(type: asyncMessageType.SERVER_REGISTER.rawValue, content: contentStr)
         
+        registerServerTimer = nil
         registerServerTimer = RepeatingTimer(timeInterval: TimeInterval(connectionRetryInterval))
     }
     
@@ -59,10 +60,11 @@ extension Async {
      */
     func sendData(type: Int, content: String?) {
         DispatchQueue.main.async {
+            self.lastSentMessageTimer = nil
             self.lastSentMessageTimer = RepeatingTimer(timeInterval: TimeInterval(self.connectionCheckTimeout))
         }
         
-        if (socketState == socketStateType.OPEN) {
+        if (socketState == SocketStateType.CONNECTED) {
             var message: JSON
             if let cont = content {
                 message = ["type": type, "content": cont]
@@ -80,7 +82,7 @@ extension Async {
             
             let finalMessage = MakeCustomTextToSend(message: messageStr).removeSpecificCharectersWithSpace()
             
-            log.verbose("this message sends through socket: \n \(finalMessage)", context: "Async")
+            log.debug("this message sends through socket: \n \(finalMessage)", context: "Async")
             
             socket?.write(string: finalMessage)
         }
@@ -105,7 +107,7 @@ extension Async {
      */
     func sendDataFromQueueToSocekt() {
         for (i, item) in pushSendDataArr.enumerated().reversed() {
-            if socketState == socketStateType.OPEN {
+            if socketState == SocketStateType.CONNECTED {
                 let type: Int = item["type"] as! Int
                 let content: String = item["content"] as! String
                 sendData(type: type, content: content)

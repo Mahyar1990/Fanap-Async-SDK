@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E060FF621206395000BD35A /* AsyncProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E060FF521206395000BD35A /* AsyncProtocols.swift */; };
+		3E17D221244A4D56009142F8 /* SocketStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17D220244A4D56009142F8 /* SocketStateType.swift */; };
 		3E4BC2F9211AE8D3008E025F /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4BC2F8211AE8D3008E025F /* GCDTimer.swift */; };
 		3EBBEE0A2174CDC000F5CDC7 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBBEE092174CDC000F5CDC7 /* Enums.swift */; };
 		3EBBEE162174CE7F00F5CDC7 /* WebSocketM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBBEE152174CE7F00F5CDC7 /* WebSocketM.swift */; };
@@ -140,6 +141,7 @@
 
 /* Begin PBXFileReference section */
 		3E060FF521206395000BD35A /* AsyncProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncProtocols.swift; sourceTree = "<group>"; };
+		3E17D220244A4D56009142F8 /* SocketStateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketStateType.swift; sourceTree = "<group>"; };
 		3E4BC2F8211AE8D3008E025F /* GCDTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDTimer.swift; sourceTree = "<group>"; };
 		3EBBEE092174CDC000F5CDC7 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		3EBBEE152174CE7F00F5CDC7 /* WebSocketM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketM.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				3EE6394D22B0C49900C4E8BF /* MakeCustomTextToSend.swift */,
+				3E17D220244A4D56009142F8 /* SocketStateType.swift */,
 				3EBBEE092174CDC000F5CDC7 /* Enums.swift */,
 				3E4BC2F8211AE8D3008E025F /* GCDTimer.swift */,
 				3ED1311321A5401D00149997 /* LogWithSwiftyBeaver.swift */,
@@ -553,6 +556,7 @@
 				3EBBEE162174CE7F00F5CDC7 /* WebSocketM.swift in Sources */,
 				3ED1311421A5401D00149997 /* LogWithSwiftyBeaver.swift in Sources */,
 				3E4BC2F9211AE8D3008E025F /* GCDTimer.swift in Sources */,
+				3E17D221244A4D56009142F8 /* SocketStateType.swift in Sources */,
 				3EE6394E22B0C49900C4E8BF /* MakeCustomTextToSend.swift in Sources */,
 				3EE6396322B0CAF200C4E8BF /* PrivateMethodsToSendMessage.swift in Sources */,
 				3EE6396822B0CE7800C4E8BF /* PrivateMethodsToCheckConnectionState.swift in Sources */,
@@ -727,7 +731,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.5.5;
+				MARKETING_VERSION = 0.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.FanapPodAsyncSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -761,7 +765,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.5.5;
+				MARKETING_VERSION = 0.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.FanapPodAsyncSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

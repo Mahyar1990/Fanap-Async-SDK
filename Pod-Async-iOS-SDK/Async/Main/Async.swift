@@ -85,134 +85,144 @@ public class Async {
     var isDeviceRegister    = false
     var isServerRegister    = false
     
-    var socketState         = socketStateType.CONNECTING
-//    private var asyncState          = ""
+    var socketState         = SocketStateType.CONNECTING
     
-    //    private var registerServerTimeoutId: Int        = 0
-    //    private var registerDeviceTimeoutId: Int        = 0
     var checkIfSocketHasOpennedTimeoutId:   Int = 0
     var socketReconnectRetryInterval:       Int = 0
     var socketReconnectCheck:               Int = 0
     
     var lastMessageId           = 0
     var retryStep:      Double  = 1
-    //    var asyncReadyTimeoutId
+    
     var pushSendDataArr         = [[String: Any]]()
     
-    //    var waitForSocketToConnectTimeoutId: Int
     var wsConnectionWaitTime:           Int = 5
     var connectionCheckTimeout:         Int = 10
     
     
+    var socket: WebSocket?
+    
+    
+    
+    // MARK: Last Received Message Timer
     // used to close socket if needed (func handleIfNeedsToCloseTheSocket)
     var lastReceivedMessageTime:    Date?
     var lastReceivedMessageTimer:   RepeatingTimer? {
         didSet {
-            
-            self.lastReceivedMessageTimer?.suspend()
-            DispatchQueue.global().async {
-                self.lastReceivedMessageTimer?.eventHandler = {
-                    if let lastReceivedMessageTimeBanged = self.lastReceivedMessageTime {
-                        let elapsed = Date().timeIntervalSince(lastReceivedMessageTimeBanged)
-                        let elapsedInt = Int(elapsed)
-                        if (elapsedInt >= self.connectionCheckTimeout) {
-                            DispatchQueue.main.async {
-                                self.socket?.disconnect()
+            if (lastReceivedMessageTimer != nil) {
+                log.verbose("Async: lastReceivedMessageTimer valueChanged: \n staus = \(self.lastReceivedMessageTimer!.state) \n timeInterval = \(self.lastReceivedMessageTimer!.timeInterval) \n lastReceivedMessageTime = \(lastReceivedMessageTime ?? Date())", context: "Async")
+                self.lastReceivedMessageTimer?.suspend()
+                DispatchQueue.global().async {
+                    self.lastReceivedMessageTimer?.eventHandler = {
+                        if let lastReceivedMessageTimeBanged = self.lastReceivedMessageTime {
+                            let elapsed = Date().timeIntervalSince(lastReceivedMessageTimeBanged)
+                            let elapsedInt = Int(elapsed)
+                            if (elapsedInt >= self.connectionCheckTimeout) {
+                                DispatchQueue.main.async {
+                                }
+                                self.lastReceivedMessageTimer?.suspend()
                             }
-                            self.lastReceivedMessageTimer?.suspend()
                         }
                     }
+                    self.lastReceivedMessageTimer?.resume()
                 }
-                self.lastReceivedMessageTimer?.resume()
+            } else {
+                log.verbose("Async: lastReceivedMessageTimer valueChanged to nil, \n lastReceivedMessageTime = \(lastReceivedMessageTime ?? Date())", context: "Async")
             }
-            
         }
     }
     
     
+    // MARK: Last Sent Message Timer
     // used to live the socket connection (func sendData)
     var lastSentMessageTime:    Date?
     var lastSentMessageTimer:   RepeatingTimer? {
         didSet {
-            
-            self.lastSentMessageTimer?.suspend()
-            DispatchQueue.global().async {
-                self.lastSentMessageTime = Date()
-                self.lastSentMessageTimer?.eventHandler = {
-                    if let lastSendMessageTimeBanged = self.lastSentMessageTime {
-                        let elapsed = Date().timeIntervalSince(lastSendMessageTimeBanged)
-                        let elapsedInt = Int(elapsed)
-                        if (elapsedInt >= self.connectionCheckTimeout) {
-                            DispatchQueue.main.async {
-                                self.asyncSendPing()
-                            }
-                            if let _ = self.lastSentMessageTimer {
-                                self.lastSentMessageTimer?.suspend()
+            if (lastSentMessageTimer != nil) {
+                log.verbose("Async: lastSentMessageTimer valueChanged: \n staus = \(self.lastSentMessageTimer!.state) \n timeInterval = \(self.lastSentMessageTimer!.timeInterval) \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
+                self.lastSentMessageTimer?.suspend()
+                DispatchQueue.global().async {
+                    self.lastSentMessageTime = Date()
+                    self.lastSentMessageTimer?.eventHandler = {
+                        if let lastSendMessageTimeBanged = self.lastSentMessageTime {
+                            let elapsed = Date().timeIntervalSince(lastSendMessageTimeBanged)
+                            let elapsedInt = Int(elapsed)
+                            if (elapsedInt >= self.connectionCheckTimeout) {
+                                DispatchQueue.main.async {
+                                    self.asyncSendPing()
+                                }
+                                if let _ = self.lastSentMessageTimer {
+                                    self.lastSentMessageTimer?.suspend()
+                                }
                             }
                         }
                     }
+                    self.lastSentMessageTimer?.resume()
                 }
-                self.lastSentMessageTimer?.resume()
+            } else {
+                log.verbose("Async: lastSentMessageTimer valueChanged to nil, \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
             }
-            
         }
     }
     
     
-    
-//    var socketRealTimeStatusInterval:   RepeatingTimer?
-    
-    var retryToConnectToSocketTimer = RepeatingTimer(timeInterval: 0) {
+    // MARK: Retry To Connect To Socket Timer
+    var retryToConnectToSocketTimer: RepeatingTimer? {
         didSet {
-            
-            retryToConnectToSocketTimer.eventHandler = {
-                if (self.retryStep < Double(self.maxReconnectTimeInterval)) {
-                    self.retryStep = self.retryStep * 2
-                } else {
-                    self.retryStep = Double(self.maxReconnectTimeInterval)
+            if (retryToConnectToSocketTimer != nil) {
+                log.verbose("Async: retryToConnectToSocketTimer valueChanged: \n staus = \(self.retryToConnectToSocketTimer!.state) \n timeInterval = \(self.retryToConnectToSocketTimer!.timeInterval)", context: "Async")
+                retryToConnectToSocketTimer?.eventHandler = {
+                    if (self.retryStep < Double(self.maxReconnectTimeInterval)) {
+                        self.retryStep = self.retryStep * 2
+                    } else {
+                        self.retryStep = Double(self.maxReconnectTimeInterval)
+                    }
+                    DispatchQueue.main.async {
+                        self.socket?.connect()
+                        self.retryToConnectToSocketTimer?.suspend()
+                    }
                 }
-                DispatchQueue.main.async {
-                    log.verbose("try to connect to the socket on the main threat. maxReconnectTimeInterval = \(self.maxReconnectTimeInterval), NextRetryStep = \(self.retryStep)", context: "Async")
-                    
-                    self.socket?.connect()
-                    self.retryToConnectToSocketTimer.suspend()
-                }
+                retryToConnectToSocketTimer?.resume()
+            } else {
+                log.verbose("Async: retryToConnectToSocketTimer valueChanged to nil", context: "Async")
             }
-            retryToConnectToSocketTimer.resume()
-            
         }
     }
     
     
+    // MARK: Check Socket is Opened or not Timer
     // use to check if we can initial socket connection or not, at the start creation of Async (func startTimers)
     var checkIfSocketHasOpennedTimer:  RepeatingTimer? {
         didSet {
-            
-            checkIfSocketHasOpennedTimer?.eventHandler = {
-                self.checkIfSocketIsCloseOrNot()
-                self.checkIfSocketHasOpennedTimer?.suspend()
+            if (checkIfSocketHasOpennedTimer != nil) {
+                log.verbose("Async: checkIfSocketHasOpennedTimer valueChanged: \n staus = \(self.checkIfSocketHasOpennedTimer!.state) \n timeInterval = \(self.checkIfSocketHasOpennedTimer!.timeInterval)", context: "Async")
+                checkIfSocketHasOpennedTimer?.eventHandler = {
+                    self.checkIfSocketIsCloseOrNot()
+                    self.checkIfSocketHasOpennedTimer?.suspend()
+                }
+                checkIfSocketHasOpennedTimer?.resume()
+            } else {
+                log.verbose("Async: checkIfSocketHasOpennedTimer valueChanged to nil", context: "Async")
             }
-            checkIfSocketHasOpennedTimer?.resume()
-            
         }
     }
     
-//    var socketReconnectRetryIntervalTimer:      RepeatingTimer?
-//    var socketReconnectCheckTimer:              RepeatingTimer?
     
+    // MARK: Register Server Timer
     var registerServerTimer: RepeatingTimer? {
         didSet {
-            
-            registerServerTimer?.eventHandler = {
-                self.self.retryToRegisterServer()
-                self.registerServerTimer?.suspend()
+            if (registerServerTimer != nil) {
+                log.verbose("Async: registerServerTimer valueChanged: staus = \(self.registerServerTimer!.state) \n timeInterval = \(self.registerServerTimer!.timeInterval)", context: "Async")
+                registerServerTimer?.eventHandler = {
+                    self.self.retryToRegisterServer()
+                    self.registerServerTimer?.suspend()
+                }
+                registerServerTimer?.resume()
+            } else {
+                log.verbose("Async: registerServerTimer valueChanged to nil.", context: "Async")
             }
-            registerServerTimer?.resume()
-            
         }
     }
-    
-    var socket: WebSocket?
     
 }
 

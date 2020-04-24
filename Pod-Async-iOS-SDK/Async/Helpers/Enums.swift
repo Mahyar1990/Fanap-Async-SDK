@@ -26,9 +26,9 @@ public enum asyncMessageType: Int {
 
 
 
-public enum socketStateType: Int {
-    case CONNECTING     = 0     // The connection is not open yet.
-    case OPEN           = 1     // The connection is open and ready to communicate.
-    case CLOSING        = 2     // The connection is in the process of closing.
-    case CLOSED         = 3     // The connection is closed or couldn't be opened.
-}
+//public enum SocketStateType: Int {
+//    case CONNECTING     = 0     // The connection is not open yet.
+//    case OPEN           = 1     // The connection is open and ready to communicate.
+//    case CLOSING        = 2     // The connection is in the process of closing.
+//    case CLOSED         = 3     // The connection is closed or couldn't be opened.
+//}

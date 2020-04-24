@@ -22,10 +22,9 @@ extension Async: WebSocketDelegate {
         handleOnClosedSocket()
         
         if let myError = error {
-//            print("socket closed error = \(myError)")
-            log.warning("socket closed error = \(myError)", context: "Async")
+            log.error("socket closed error = \(myError)", context: "Async")
         } else {
-            log.warning("socket closed error", context: "Async")
+            log.error("socket closed error", context: "Async")
         }
         
     }

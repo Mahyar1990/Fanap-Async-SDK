@@ -13,7 +13,7 @@ import Foundation
 // it will uses many times on Async and also on Chat maybe
 open class RepeatingTimer {
     
-    public let timeInterval: TimeInterval
+    public var timeInterval: TimeInterval
     
     public init(timeInterval: TimeInterval) {
         self.timeInterval = timeInterval
