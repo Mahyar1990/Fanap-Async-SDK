@@ -60,7 +60,11 @@ extension Async {
      */
     func sendData(type: Int, content: String?) {
         DispatchQueue.main.async {
-            self.lastSentMessageTimer = nil
+            if self.lastSentMessageTimer != nil {
+                self.lastSentMessageTimer?.suspend()
+                self.lastSentMessageTimer = nil
+            }
+//            self.lastSentMessageTimer = nil
             self.lastSentMessageTimer = RepeatingTimer(timeInterval: TimeInterval(self.connectionCheckTimeout))
         }
         
