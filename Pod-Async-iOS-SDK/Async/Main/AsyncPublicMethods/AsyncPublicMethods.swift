@@ -73,7 +73,7 @@ extension Async {
     /*
      this method will send ping message throught Async
      */
-    public func asyncSendPing() {
+    @objc public func asyncSendPing() {
         sendData(type: 0, content: nil)
     }
     

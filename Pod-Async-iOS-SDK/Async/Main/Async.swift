@@ -97,7 +97,7 @@ public class Async {
     var pushSendDataArr         = [[String: Any]]()
     
     var wsConnectionWaitTime:           Int = 5
-    var connectionCheckTimeout:         Int = 10
+    var connectionCheckTimeout:         Int = 8
     
     
     var socket: WebSocket?
@@ -119,6 +119,7 @@ public class Async {
                             let elapsedInt = Int(elapsed)
                             if (elapsedInt >= self.connectionCheckTimeout) {
                                 DispatchQueue.main.async {
+                                    self.asyncSendPing()
                                 }
                                 self.lastReceivedMessageTimer?.suspend()
                             }
@@ -135,35 +136,35 @@ public class Async {
     
     // MARK: Last Sent Message Timer
     // used to live the socket connection (func sendData)
-    var lastSentMessageTime:    Date?
-    var lastSentMessageTimer:   RepeatingTimer? {
-        didSet {
-            if (lastSentMessageTimer != nil) {
-                log.verbose("Async: lastSentMessageTimer valueChanged: \n staus = \(self.lastSentMessageTimer!.state) \n timeInterval = \(self.lastSentMessageTimer!.timeInterval) \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
-                self.lastSentMessageTimer?.suspend()
-                DispatchQueue.global().async {
-                    self.lastSentMessageTime = Date()
-                    self.lastSentMessageTimer?.eventHandler = {
-                        if let lastSendMessageTimeBanged = self.lastSentMessageTime {
-                            let elapsed = Date().timeIntervalSince(lastSendMessageTimeBanged)
-                            let elapsedInt = Int(elapsed)
-                            if (elapsedInt >= self.connectionCheckTimeout) {
-                                DispatchQueue.main.async {
-                                    self.asyncSendPing()
-                                }
-                                if let _ = self.lastSentMessageTimer {
-                                    self.lastSentMessageTimer?.suspend()
-                                }
-                            }
-                        }
-                    }
-                    self.lastSentMessageTimer?.resume()
-                }
-            } else {
-                log.verbose("Async: lastSentMessageTimer valueChanged to nil, \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
-            }
-        }
-    }
+//    var lastSentMessageTime:    Date?
+//    var lastSentMessageTimer:   RepeatingTimer? {
+//        didSet {
+//            if (lastSentMessageTimer != nil) {
+//                log.verbose("Async: lastSentMessageTimer valueChanged: \n staus = \(self.lastSentMessageTimer!.state) \n timeInterval = \(self.lastSentMessageTimer!.timeInterval) \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
+//                self.lastSentMessageTimer?.suspend()
+//                DispatchQueue.global().async {
+//                    self.lastSentMessageTime = Date()
+//                    self.lastSentMessageTimer?.eventHandler = {
+//                        if let lastSendMessageTimeBanged = self.lastSentMessageTime {
+//                            let elapsed = Date().timeIntervalSince(lastSendMessageTimeBanged)
+//                            let elapsedInt = Int(elapsed)
+//                            if (elapsedInt >= self.connectionCheckTimeout) {
+//                                DispatchQueue.main.async {
+//                                    self.asyncSendPing()
+//                                }
+//                                if let _ = self.lastSentMessageTimer {
+//                                    self.lastSentMessageTimer?.suspend()
+//                                }
+//                            }
+//                        }
+//                    }
+//                    self.lastSentMessageTimer?.resume()
+//                }
+//            } else {
+//                log.verbose("Async: lastSentMessageTimer valueChanged to nil, \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
+//            }
+//        }
+//    }
     
     
     // MARK: Retry To Connect To Socket Timer
