@@ -48,6 +48,11 @@ extension Async {
         
         registerServerTimer = nil
         registerServerTimer = RepeatingTimer(timeInterval: TimeInterval(connectionRetryInterval))
+        
+//        if let _ = rsTimer {
+//            rsTimer!.stop()
+//        }
+//        registerServerTimer(with: TimeInterval(connectionRetryInterval))
     }
     
     
