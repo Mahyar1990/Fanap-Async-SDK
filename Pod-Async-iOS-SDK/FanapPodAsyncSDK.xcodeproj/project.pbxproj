@@ -729,7 +729,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=podchat\nexport SENTRY_PROJECT=testtt\nexport SENTRY_AUTH_TOKEN=ac8d3b3801334c8caddb32f688f30ec947821bcf07494796bc4f9ebab2f68ca6\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=podasync\nexport SENTRY_PROJECT=ios\nexport SENTRY_AUTH_TOKEN=ac8d3b3801334c8caddb32f688f30ec947821bcf07494796bc4f9ebab2f68ca6\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

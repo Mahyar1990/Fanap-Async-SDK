@@ -111,11 +111,13 @@ public class Async {
     // ios podasync
     // "https://28257522c08940c9bc43cf36c6c2610c:413a96b43f0242c4a23ad96a23aba86e@chatsentryweb.sakku.cloud/6"
     
+    // "https://4deb78f15c074bc6b8823194735cdf64:89bd1fe2ac984abea96a4f81d22540af@chatsentryweb.sakku.cloud/7"
+    
     // testtt podchat
     func startCrashAnalitics() {
         // Config for Sentry 4.3.1
         do {
-            Client.shared = try Client(dsn: "https://4deb78f15c074bc6b8823194735cdf64:89bd1fe2ac984abea96a4f81d22540af@chatsentryweb.sakku.cloud/7")
+            Client.shared = try Client(dsn: "https://28257522c08940c9bc43cf36c6c2610c:413a96b43f0242c4a23ad96a23aba86e@chatsentryweb.sakku.cloud/6")
             try Client.shared?.startCrashHandler()
         } catch let error {
             print("\(error)")
