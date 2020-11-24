@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,6 +30,8 @@
 		3EFDB492236C6F4000623461 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFDB464236C6F2200623461 /* Starscream.framework */; };
 		3EFDB493236C6F4500623461 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFDB470236C6F2C00623461 /* SwiftyBeaver.framework */; };
 		3EFDB494236C6F4900623461 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFDB485236C6F3300623461 /* SwiftyJSON.framework */; };
+		3EFF43EC256C1BE4004C1056 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF43E7256C1BAD004C1056 /* Sentry.framework */; platformFilter = ios; };
+		3EFF43ED256C1BE4004C1056 /* Sentry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF43E7256C1BAD004C1056 /* Sentry.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +182,27 @@
 			remoteGlobalIDString = A8580F741BCF5C5B00DA927B;
 			remoteInfo = "SwiftyJSON tvOS Tests";
 		};
+		3EFF43E6256C1BAD004C1056 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63AA759B1EB8AEF500D153DE;
+			remoteInfo = Sentry;
+		};
+		3EFF43E8256C1BAD004C1056 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63AA76651EB8CB2F00D153DE;
+			remoteInfo = SentryTests;
+		};
+		3EFF43EA256C1BAD004C1056 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6387B7C21ED84F910045A84C;
+			remoteInfo = SentryStatic;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -189,6 +212,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3EFF43ED256C1BE4004C1056 /* Sentry.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +244,7 @@
 		3EFDB45E236C6F2200623461 /* Starscream.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Starscream.xcodeproj; path = "../../../Usefull Libraries/Starscream-3.0.5/Starscream.xcodeproj"; sourceTree = "<group>"; };
 		3EFDB467236C6F2C00623461 /* SwiftyBeaver.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyBeaver.xcodeproj; path = "../../../Usefull Libraries/SwiftyBeaver-master/SwiftyBeaver.xcodeproj"; sourceTree = "<group>"; };
 		3EFDB479236C6F3300623461 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = "../../../Usefull Libraries/SwiftyJSON-master/SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
+		3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sentry.xcodeproj; path = "../../../Usefull Libraries/sentry-cocoa-4.3.1/Sentry.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +255,7 @@
 				3E17D3A624D6AAF800B75135 /* Each.framework in Frameworks */,
 				3EFDB494236C6F4900623461 /* SwiftyJSON.framework in Frameworks */,
 				3EFDB493236C6F4500623461 /* SwiftyBeaver.framework in Frameworks */,
+				3EFF43EC256C1BE4004C1056 /* Sentry.framework in Frameworks */,
 				3EFDB492236C6F4000623461 /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +315,7 @@
 				3EFDB479236C6F3300623461 /* SwiftyJSON.xcodeproj */,
 				3EFDB467236C6F2C00623461 /* SwiftyBeaver.xcodeproj */,
 				3EFDB45E236C6F2200623461 /* Starscream.xcodeproj */,
+				3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */,
 				3E25906821D695EA00CB9D7D /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -387,6 +414,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3EFF43E0256C1BAD004C1056 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3EFF43E7256C1BAD004C1056 /* Sentry.framework */,
+				3EFF43E9256C1BAD004C1056 /* SentryTests.xctest */,
+				3EFF43EB256C1BAD004C1056 /* libSentryStatic.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -472,6 +509,10 @@
 				{
 					ProductGroup = 3E17D39224D6AAEB00B75135 /* Products */;
 					ProjectRef = 3E17D39124D6AAEB00B75135 /* Each.xcodeproj */;
+				},
+				{
+					ProductGroup = 3EFF43E0256C1BAD004C1056 /* Products */;
+					ProjectRef = 3EFF43DF256C1BAD004C1056 /* Sentry.xcodeproj */;
 				},
 				{
 					ProductGroup = 3EFDB45F236C6F2200623461 /* Products */;
@@ -635,6 +676,27 @@
 			remoteRef = 3EFDB490236C6F3300623461 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3EFF43E7256C1BAD004C1056 /* Sentry.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sentry.framework;
+			remoteRef = 3EFF43E6256C1BAD004C1056 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3EFF43E9256C1BAD004C1056 /* SentryTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SentryTests.xctest;
+			remoteRef = 3EFF43E8256C1BAD004C1056 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3EFF43EB256C1BAD004C1056 /* libSentryStatic.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSentryStatic.a;
+			remoteRef = 3EFF43EA256C1BAD004C1056 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -661,12 +723,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=podchat\nexport SENTRY_PROJECT=testtt\nexport SENTRY_AUTH_TOKEN=ac8d3b3801334c8caddb32f688f30ec947821bcf07494796bc4f9ebab2f68ca6\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -854,7 +917,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.9.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.FanapPodAsyncSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -888,7 +951,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.9.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.FanapPodAsyncSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

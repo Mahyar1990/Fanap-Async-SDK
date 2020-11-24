@@ -1,12 +1,9 @@
 Pod-Async-iOS-SDK/Starscream-3.0.6/
 Pod-Async-iOS-SDK/SwiftyBeaver-master/
 Pod-Async-iOS-SDK/SwiftyJSON-3.1.1/
-.DS_Store/
-xcuserdata/
-*.xcuserdata
+Pod-Async-iOS-SDK/sentry-cocoa-4.3.1
 Pod-Async-iOS-SDK/.DS_Store
 .DS_Store
-Pod-Async-iOS-SDK/FanapPodAsyncSDK.xcodeproj/project.xcworkspace/xcuserdata/Mahyar.xcuserdatad/UserInterfaceState.xcuserstate
-Pod-Async-iOS-SDK/.DS_Store
-Pod-Async-iOS-SDK/FanapPodAsyncSDK.xcodeproj/project.xcworkspace/xcuserdata/Mahyar.xcuserdatad/UserInterfaceState.xcuserstate
-Pod-Async-iOS-SDK/FanapPodAsyncSDK.xcodeproj/xcuserdata/Mahyar.xcuserdatad/xcschemes/xcschememanagement.plist
+
+**/xcuserdata/
+**/xcschemes/

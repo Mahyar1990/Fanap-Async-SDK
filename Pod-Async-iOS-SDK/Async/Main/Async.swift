@@ -12,6 +12,7 @@ import SwiftyJSON
 import SwiftyBeaver
 //import GCDTimer
 import Each
+import Sentry
 
 
 public let log = LogWithSwiftyBeaver().log
@@ -80,6 +81,7 @@ public class Async {
         }
         
         
+        startCrashAnalitics()
         startLastRecievedTimer()
     }
     
@@ -105,6 +107,27 @@ public class Async {
     
     
     var socket: WebSocket?
+    
+    // ios podasync
+    // "https://28257522c08940c9bc43cf36c6c2610c:413a96b43f0242c4a23ad96a23aba86e@chatsentryweb.sakku.cloud/6"
+    
+    // testtt podchat
+    func startCrashAnalitics() {
+        // Config for Sentry 4.3.1
+        do {
+            Client.shared = try Client(dsn: "https://4deb78f15c074bc6b8823194735cdf64:89bd1fe2ac984abea96a4f81d22540af@chatsentryweb.sakku.cloud/7")
+            try Client.shared?.startCrashHandler()
+        } catch let error {
+            print("\(error)")
+        }
+        
+        print("\n\n\n\n\n\nFirst Log on Async\n\n\n\n\n")
+        
+        let event = Event(level: SentrySeverity.error)
+        event.message = "First Log on Async"
+        Client.shared?.send(event: event, completion: { _ in })
+        
+    }
     
     
 //    var lrmTimer: GCDTimer!

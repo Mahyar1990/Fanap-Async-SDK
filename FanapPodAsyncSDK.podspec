@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FanapPodAsyncSDK"
-  s.version      = "0.8.1"
+  s.version      = "0.9.3.0"
   s.summary      = "Fanap's POD Async Service (DIRANA) - iOS SDK"
   s.description  = "This Package will use to connect the client to the Fanap's async service (DIRANA), and it will live the connection (with socket) to send and recieve messages..."
   s.homepage     = "https://github.com/Mahyar1990/Fanap-Async-SDK"
@@ -17,5 +17,6 @@ Pod::Spec.new do |s|
   s.dependency "SwiftyJSON"
   s.dependency "SwiftyBeaver"
   s.dependency "Each" , '~> 1.2'
+  s.dependency "Sentry" , '~> 4.3.1'
 
 end
