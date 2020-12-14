@@ -35,7 +35,7 @@ public class Async {
     // MARK: - Async initializer
     public init(socketAddress:          String,
                 serverName:             String,
-                deviceId:               String,
+                deviceId:               String?,
                 appId:                  String?,
                 peerId:                 Int?,
                 messageTtl:             Int?,
@@ -50,7 +50,7 @@ public class Async {
         
         self.socketAddress = socketAddress
         self.serverName = serverName
-        self.deviceId = deviceId
+        self.deviceId = deviceId ?? NSUUID().uuidString
         
         if let theAppId = appId {
             self.appId = theAppId
