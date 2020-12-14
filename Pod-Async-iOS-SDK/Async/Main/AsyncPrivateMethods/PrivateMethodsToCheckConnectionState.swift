@@ -16,11 +16,6 @@ extension Async {
     func startTimers() {
         checkIfSocketHasOpennedTimer = nil
         checkIfSocketHasOpennedTimer = RepeatingTimer(timeInterval: 65)
-        
-//        if let _ = cishoTimer {
-//            cishoTimer!.stop()
-//        }
-//        checkIfSocketHasOpennedTimer(with: 65)
     }
     
     

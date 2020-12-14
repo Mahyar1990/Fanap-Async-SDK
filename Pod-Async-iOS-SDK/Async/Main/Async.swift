@@ -10,7 +10,6 @@ import Foundation
 import Starscream
 import SwiftyJSON
 import SwiftyBeaver
-//import GCDTimer
 import Each
 import Sentry
 
@@ -80,7 +79,6 @@ public class Async {
             self.maxReconnectTimeInterval = 60
         }
         
-        
         startCrashAnalitics()
         startLastRecievedTimer()
     }
@@ -108,12 +106,6 @@ public class Async {
     
     var socket: WebSocket?
     
-    // ios podasync
-    // "https://28257522c08940c9bc43cf36c6c2610c:413a96b43f0242c4a23ad96a23aba86e@chatsentryweb.sakku.cloud/6"
-    
-    // "https://4deb78f15c074bc6b8823194735cdf64:89bd1fe2ac984abea96a4f81d22540af@chatsentryweb.sakku.cloud/7"
-    
-    // testtt podchat
     func startCrashAnalitics() {
         // Config for Sentry 4.3.1
         do {
@@ -131,27 +123,6 @@ public class Async {
         
     }
     
-    
-//    var lrmTimer: GCDTimer!
-//    var lastReceivedMessageTime:    Date?
-//    func startLastRecievedTimer() {
-//        lrmTimer = GCDTimer(intervalInSecs: (TimeInterval(self.connectionCheckTimeout) * 1.5))
-//
-//        lrmTimer.Event = {
-//            if let lastReceivedMessageTimeBanged = self.lastReceivedMessageTime {
-//                let elapsed = Date().timeIntervalSince(lastReceivedMessageTimeBanged)
-//                let elapsedInt = Int(elapsed)
-//                if (elapsedInt >= self.connectionCheckTimeout) {
-//                    DispatchQueue.main.async {
-//                        self.asyncSendPing()
-//                    }
-//                    self.lrmTimer.pause()
-//                    self.lrmTimer.start()
-//                }
-//            }
-//        }
-//        lrmTimer.start()
-//    }
     var lrmTimer: Each!
     var lastReceivedMessageTime:    Date?
     func startLastRecievedTimer() {
@@ -174,68 +145,6 @@ public class Async {
             return .continue
         }
     }
-    
-//    // MARK: Last Received Message Timer
-//    // used to close socket if needed (func handleIfNeedsToCloseTheSocket)
-//    var lastReceivedMessageTime:    Date?
-//    var lastReceivedMessageTimer:   RepeatingTimer? {
-//        didSet {
-//            if (lastReceivedMessageTimer != nil) {
-//                log.verbose("Async: lastReceivedMessageTimer valueChanged: \n staus = \(self.lastReceivedMessageTimer!.state) \n timeInterval = \(self.lastReceivedMessageTimer!.timeInterval) \n lastReceivedMessageTime = \(lastReceivedMessageTime ?? Date())", context: "Async")
-//                self.lastReceivedMessageTimer?.suspend()
-//                DispatchQueue.global().async {
-//                    self.lastReceivedMessageTimer?.eventHandler = {
-//                        if let lastReceivedMessageTimeBanged = self.lastReceivedMessageTime {
-//                            let elapsed = Date().timeIntervalSince(lastReceivedMessageTimeBanged)
-//                            let elapsedInt = Int(elapsed)
-//                            if (elapsedInt >= self.connectionCheckTimeout) {
-//                                DispatchQueue.main.async {
-//                                    self.asyncSendPing()
-//                                }
-//                                self.lastReceivedMessageTimer?.suspend()
-//                            }
-//                        }
-//                    }
-//                    self.lastReceivedMessageTimer?.resume()
-//                }
-//            } else {
-//                log.verbose("Async: lastReceivedMessageTimer valueChanged to nil, \n lastReceivedMessageTime = \(lastReceivedMessageTime ?? Date())", context: "Async")
-//            }
-//        }
-//    }
-    
-    
-    // MARK: Last Sent Message Timer
-    // used to live the socket connection (func sendData)
-//    var lastSentMessageTime:    Date?
-//    var lastSentMessageTimer:   RepeatingTimer? {
-//        didSet {
-//            if (lastSentMessageTimer != nil) {
-//                log.verbose("Async: lastSentMessageTimer valueChanged: \n staus = \(self.lastSentMessageTimer!.state) \n timeInterval = \(self.lastSentMessageTimer!.timeInterval) \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
-//                self.lastSentMessageTimer?.suspend()
-//                DispatchQueue.global().async {
-//                    self.lastSentMessageTime = Date()
-//                    self.lastSentMessageTimer?.eventHandler = {
-//                        if let lastSendMessageTimeBanged = self.lastSentMessageTime {
-//                            let elapsed = Date().timeIntervalSince(lastSendMessageTimeBanged)
-//                            let elapsedInt = Int(elapsed)
-//                            if (elapsedInt >= self.connectionCheckTimeout) {
-//                                DispatchQueue.main.async {
-//                                    self.asyncSendPing()
-//                                }
-//                                if let _ = self.lastSentMessageTimer {
-//                                    self.lastSentMessageTimer?.suspend()
-//                                }
-//                            }
-//                        }
-//                    }
-//                    self.lastSentMessageTimer?.resume()
-//                }
-//            } else {
-//                log.verbose("Async: lastSentMessageTimer valueChanged to nil, \n lastSentMessageTime = \(lastSentMessageTime ?? Date())", context: "Async")
-//            }
-//        }
-//    }
     
     
     // MARK: Retry To Connect To Socket Timer
@@ -260,22 +169,6 @@ public class Async {
             }
         }
     }
-//    var rtctsTimer: Each?
-//    func retryToConnectToSocketTimer(with retryInterval: TimeInterval) {
-//        rtctsTimer = Each(retryInterval).seconds
-//        rtctsTimer!.perform {
-//            if (self.retryStep < Double(self.maxReconnectTimeInterval)) {
-//                self.retryStep = self.retryStep * 2
-//            } else {
-//                self.retryStep = Double(self.maxReconnectTimeInterval)
-//            }
-//            DispatchQueue.main.async {
-//                self.socket?.connect()
-//                self.rtctsTimer!.restart()
-//            }
-//            return .continue
-//        }
-//    }
     
     
     // MARK: Check Socket is Opened or not Timer
@@ -294,15 +187,6 @@ public class Async {
             }
         }
     }
-//    var cishoTimer: Each?
-//    func checkIfSocketHasOpennedTimer(with retryInterval: TimeInterval) {
-//        cishoTimer = Each(retryInterval).seconds
-//        cishoTimer!.perform {
-//            self.checkIfSocketIsCloseOrNot()
-//            self.cishoTimer!.stop()
-//            return .stop
-//        }
-//    }
     
     
     // MARK: Register Server Timer
@@ -320,15 +204,6 @@ public class Async {
             }
         }
     }
-//    var rsTimer: Each?
-//    func registerServerTimer(with retryInterval: TimeInterval) {
-//        rsTimer = Each(retryInterval).seconds
-//        rsTimer!.perform {
-//            self.retryToRegisterServer()
-//            self.rsTimer!.stop()
-//            return .stop
-//        }
-//    }
     
 }
 

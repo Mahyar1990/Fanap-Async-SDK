@@ -48,11 +48,6 @@ extension Async {
         
         registerServerTimer = nil
         registerServerTimer = RepeatingTimer(timeInterval: TimeInterval(connectionRetryInterval))
-        
-//        if let _ = rsTimer {
-//            rsTimer!.stop()
-//        }
-//        registerServerTimer(with: TimeInterval(connectionRetryInterval))
     }
     
     
@@ -64,15 +59,6 @@ extension Async {
      then if the socket connection state was "OPEN", send the data
      */
     func sendData(type: Int, content: String?) {
-//        DispatchQueue.main.async {
-//            if self.lastSentMessageTimer != nil {
-//                self.lastSentMessageTimer?.suspend()
-////                self.lastSentMessageTimer = nil
-//            }
-////            self.lastSentMessageTimer = nil
-//            self.lastSentMessageTimer = RepeatingTimer(timeInterval: TimeInterval(self.connectionCheckTimeout))
-//        }
-//        startLastSentMessageTimer()
         
         if (socketState == SocketStateType.CONNECTED) {
             var message: JSON
@@ -84,16 +70,8 @@ extension Async {
             let messageStr: String = "\(message)"
             delegate?.asyncSendMessage(params: message)
             
-            // these 4 lines are to remove some characters (like: space, \n , \t) exept tho ones that are in the message text context
-            //            let compressedStr = String(messageStr.filter { !" \n\t\r".contains($0) })
-            //            let strWithReturn = compressedStr.replacingOccurrences(of: "Ⓝ", with: "\n")
-            //            let strWithSpace = strWithReturn.replacingOccurrences(of: "Ⓢ", with: " ")
-            //            let strWithTab = strWithSpace.replacingOccurrences(of: "Ⓣ", with: "\t")
-            
             let finalMessage = MakeCustomTextToSend(message: messageStr).removeSpecificCharectersWithSpace()
-            
             log.debug("this message sends through socket: \n \(finalMessage)", context: "Async")
-            
             socket?.write(string: finalMessage)
         }
     }

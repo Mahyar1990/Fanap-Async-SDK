@@ -100,10 +100,6 @@ extension Async {
         isSocketOpen = false
         
         registerServerTimer?.suspend()
-//        if let _ = rsTimer {
-//            rsTimer!.stop()
-//        }
-        
         socket?.connect()
     }
     
@@ -137,9 +133,6 @@ extension Async {
         pushSendDataArr = []
         
         registerServerTimer?.suspend()
-//        if let _ = rsTimer {
-//            rsTimer!.stop()
-//        }
         
         socketState = SocketStateType.CLOSED
         delegate?.asyncStateChanged(socketState:        socketState,
