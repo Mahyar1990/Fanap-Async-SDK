@@ -22,12 +22,6 @@ extension Async {
         
         DispatchQueue.global().async {
             self.checkIfSocketHasOpennedTimer?.suspend()
-//            if let _ = self.cishoTimer {
-//                self.cishoTimer!.stop()
-//            }
-            
-//            self.socketReconnectRetryIntervalTimer?.suspend()
-//            self.socketReconnectCheckTimer?.suspend()
         }
         isSocketOpen = true
         delegate?.asyncConnect(newPeerID: peerId)
@@ -75,12 +69,6 @@ extension Async {
             
             retryToConnectToSocketTimer = nil
             retryToConnectToSocketTimer = RepeatingTimer(timeInterval: retryStep)
-            
-//            if let _ = rtctsTimer {
-//                rtctsTimer!.stop()
-//            }
-//            retryToConnectToSocketTimer(with: retryStep)
-            
             
         } else {
             delegate?.asyncError(errorCode:     4005,
@@ -160,8 +148,6 @@ extension Async {
     
     // Close Socket connection if needed
     func handleIfNeedsToCloseTheSocket() {
-//        lastReceivedMessageTimer = nil
-//        lastReceivedMessageTimer = RepeatingTimer(timeInterval: (TimeInterval(self.connectionCheckTimeout) * 1.5))
         lrmTimer.stop()
         lrmTimer.restart()
     }
