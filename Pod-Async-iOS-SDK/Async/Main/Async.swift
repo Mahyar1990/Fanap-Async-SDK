@@ -14,7 +14,7 @@ import Each
 import Sentry
 
 
-public let log = LogWithSwiftyBeaver().log
+public var log = LogWithSwiftyBeaver(withLevel: nil).log
 
 // this is the Async class that will handles Asynchronous messaging
 public class Async {
@@ -33,15 +33,20 @@ public class Async {
     var maxReconnectTimeInterval: Int
     
     // MARK: - Async initializer
-    public init(socketAddress:      String,
-                serverName:         String,
-                deviceId:           String,
-                appId:              String?,
-                peerId:             Int?,
-                messageTtl:         Int?,
-                connectionRetryInterval: Int?,
-                maxReconnectTimeInterval: Int?,
-                reconnectOnClose:   Bool?) {
+    public init(socketAddress:          String,
+                serverName:             String,
+                deviceId:               String,
+                appId:                  String?,
+                peerId:                 Int?,
+                messageTtl:             Int?,
+                connectionRetryInterval:    Int?,
+                maxReconnectTimeInterval:   Int?,
+                reconnectOnClose:       Bool?,
+                showDebuggingLogLevel:  LogLevel?) {
+        
+        if let logLevel = showDebuggingLogLevel {
+            log = LogWithSwiftyBeaver(withLevel: logLevel).log
+        }
         
         self.socketAddress = socketAddress
         self.serverName = serverName

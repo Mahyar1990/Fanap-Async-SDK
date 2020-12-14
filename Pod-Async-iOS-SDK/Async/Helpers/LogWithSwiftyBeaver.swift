@@ -14,12 +14,12 @@ open class LogWithSwiftyBeaver {
     
     public let log = SwiftyBeaver.self
     
-    init() {
-        configLogs()
+    init(withLevel logLevel: LogLevel?) {
+        configLogs(withLevel: logLevel ?? .error)
     }
     
     // MARK: - config Logs
-    public func configLogs() {
+    public func configLogs(withLevel level: LogLevel) {
         // add log destinations. at least one is needed!
         
         // 1-------------------------------------------------------------
@@ -53,7 +53,7 @@ ________________________________________________________________________________
          console.minLevel = .error
          */
 //        console.minLevel = .verbose
-        console.minLevel = .debug
+        console.minLevel = level.swiftyBeaverLevel()
         
         /*
          // set Path Filter to a certain class
