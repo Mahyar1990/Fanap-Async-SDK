@@ -14,7 +14,7 @@ extension Async {
     
     // MARK: - Instantiate Timer
     func startTimers() {
-        checkIfSocketHasOpennedTimer = nil
+        stopCheckIfSocketHasOpennedTimer()
         checkIfSocketHasOpennedTimer = RepeatingTimer(timeInterval: 65)
     }
     

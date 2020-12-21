@@ -30,10 +30,6 @@ open class MakeCustomTextToSend {
         for c in textMessage {
             if (c == " ") {
                 returnStr.append("Ⓢ")
-//            } else if (c == "\n") {
-//                returnStr.append("Ⓝ")
-//            } else if (c == "\t") {
-//                returnStr.append("Ⓣ")
             } else {
                 returnStr.append(c)
             }
@@ -45,13 +41,6 @@ open class MakeCustomTextToSend {
     
     
     public func removeSpecificCharectersWithSpace() -> String {
-        
-        // these 4 lines are to remove some characters (like: space, \n , \t) exept tho ones that are in the message text context
-//        let compressedStr = String(textMessage.filter { !" \n\t\r".contains($0) })
-//        let strWithReturn = compressedStr.replacingOccurrences(of: "Ⓝ", with: "\n")
-//        let strWithSpace = strWithReturn.replacingOccurrences(of: "Ⓢ", with: " ")
-//        let strWithTab = strWithSpace.replacingOccurrences(of: "Ⓣ", with: "\t")
-        
         let compressedStr = String(textMessage.filter { !" ".contains($0) })
         let strWithSpace = compressedStr.replacingOccurrences(of: "Ⓢ", with: " ")
         

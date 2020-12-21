@@ -22,8 +22,6 @@ extension Async {
         
         DispatchQueue.global().async {
             self.checkIfSocketHasOpennedTimer?.suspend()
-//            self.socketReconnectRetryIntervalTimer?.suspend()
-//            self.socketReconnectCheckTimer?.suspend()
         }
         isSocketOpen = true
         delegate?.asyncConnect(newPeerID: peerId)
@@ -69,7 +67,7 @@ extension Async {
                                         serverRegister:     isServerRegister,
                                         peerId:             peerId)
             
-            retryToConnectToSocketTimer = nil
+            stopRetryToConnectToSocketTimer()
             retryToConnectToSocketTimer = RepeatingTimer(timeInterval: retryStep)
             
         } else {
@@ -150,8 +148,9 @@ extension Async {
     
     // Close Socket connection if needed
     func handleIfNeedsToCloseTheSocket() {
-        lastReceivedMessageTimer = nil
-        lastReceivedMessageTimer = RepeatingTimer(timeInterval: (TimeInterval(self.connectionCheckTimeout) * 1.5))
+        stopLastReceivedMessageTimer()
+//        lrmTimer.stop()
+        lrmTimer.restart()
     }
     
     // MARK: - Sends Ping Message
