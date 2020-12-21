@@ -46,7 +46,7 @@ extension Async {
         let contentStr = "\(content)"
         pushSendData(type: asyncMessageType.SERVER_REGISTER.rawValue, content: contentStr)
         
-        registerServerTimer = nil
+        stopRegisterServerTimer()
         registerServerTimer = RepeatingTimer(timeInterval: TimeInterval(connectionRetryInterval))
     }
     

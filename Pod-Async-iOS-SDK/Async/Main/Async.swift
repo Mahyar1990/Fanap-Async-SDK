@@ -88,6 +88,29 @@ public class Async {
         startLastRecievedTimer()
     }
     
+    public func disposeAsyncObject() {
+        stopLastReceivedMessageTimer()
+        stopRetryToConnectToSocketTimer()
+        stopCheckIfSocketHasOpennedTimer()
+        stopRegisterServerTimer()
+        asyncClosed()
+    }
+    
+    func stopLastReceivedMessageTimer() {
+        lrmTimer.stop()
+    }
+    
+    func stopRetryToConnectToSocketTimer() {
+        retryToConnectToSocketTimer = nil
+    }
+    
+    func stopCheckIfSocketHasOpennedTimer() {
+        checkIfSocketHasOpennedTimer = nil
+    }
+    
+    func stopRegisterServerTimer() {
+        registerServerTimer = nil
+    }
     
     var oldPeerId:          Int?
     var isSocketOpen        = false
@@ -119,8 +142,6 @@ public class Async {
         } catch let error {
             print("\(error)")
         }
-        
-        print("\n\n\n\n\n\nFirst Log on Async\n\n\n\n\n")
         
         let event = Event(level: SentrySeverity.error)
         event.message = "First Log on Async"

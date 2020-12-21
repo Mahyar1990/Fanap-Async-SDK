@@ -67,7 +67,7 @@ extension Async {
                                         serverRegister:     isServerRegister,
                                         peerId:             peerId)
             
-            retryToConnectToSocketTimer = nil
+            stopRetryToConnectToSocketTimer()
             retryToConnectToSocketTimer = RepeatingTimer(timeInterval: retryStep)
             
         } else {
@@ -148,7 +148,8 @@ extension Async {
     
     // Close Socket connection if needed
     func handleIfNeedsToCloseTheSocket() {
-        lrmTimer.stop()
+        stopLastReceivedMessageTimer()
+//        lrmTimer.stop()
         lrmTimer.restart()
     }
     

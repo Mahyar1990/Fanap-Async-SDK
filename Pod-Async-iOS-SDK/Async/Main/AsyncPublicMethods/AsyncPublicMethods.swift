@@ -105,30 +105,31 @@ extension Async {
     
     
     // MARK: - Disconnect from socket
-    /*
-     this method will disconnect Async from socket
-     */
-    public func asyncClose() {
-        isDeviceRegister = false
-        isServerRegister = false
-        socketState = SocketStateType.CLOSED
-        delegate?.asyncStateChanged(socketState:        socketState,
-                                    timeUntilReconnect: 0,
-                                    deviceRegister:     isDeviceRegister,
-                                    serverRegister:     isServerRegister,
-                                    peerId:             peerId)
-        socket?.disconnect()
-    }
+//    /*
+//     this method will disconnect Async from socket
+//     */
+//    public func asyncClose() {
+//        isDeviceRegister = false
+//        isServerRegister = false
+//        socketState = SocketStateType.CLOSED
+//        delegate?.asyncStateChanged(socketState:        socketState,
+//                                    timeUntilReconnect: 0,
+//                                    deviceRegister:     isDeviceRegister,
+//                                    serverRegister:     isServerRegister,
+//                                    peerId:             peerId)
+//        socket?.disconnect()
+//    }
     
     // MARK: - Log Out
     /*
      this method will log out the user with this account and then will close the socket
      */
-    public func asyncLogOut() {
+    func asyncClosed() {
         oldPeerId = peerId
         peerId = 0
         isServerRegister = false
         isDeviceRegister = false
+        reconnectOnClose = false
         isSocketOpen = false
         pushSendDataArr = []
         
@@ -140,8 +141,8 @@ extension Async {
                                     deviceRegister:     isDeviceRegister,
                                     serverRegister:     isServerRegister,
                                     peerId:             peerId)
-        reconnectOnClose = false
-        asyncClose()
+        
+        socket?.disconnect()
     }
     
     
